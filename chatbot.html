@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/src/style.css" rel="stylesheet">
+		<title>sharky-bnao chatbot</title>
+		<style>
+			.chat-input {
+				height: 12rem;
+				resize: none;
+				overflow-y: auto;
+			}
+
+			.chat-output {
+				height: 22rem;
+				overflow: hidden;
+				padding: 0;
+				resize: none;
+			}
+
+			.chat-output-inner {
+				height: 100%;
+				overflow-y: auto;
+				padding: 1rem;
+				line-height: 1.7;
+				word-break: break-word;
+				scroll-behavior: smooth;
+			}
+
+			.chat-input::-webkit-scrollbar,
+			.chat-output-inner::-webkit-scrollbar {
+				width: 10px;
+			}
+
+			.chat-input::-webkit-scrollbar-track,
+			.chat-output-inner::-webkit-scrollbar-track {
+				background: transparent;
+			}
+
+			.chat-input::-webkit-scrollbar-thumb,
+			.chat-output-inner::-webkit-scrollbar-thumb {
+				background: rgba(99, 102, 241, 0.35);
+				border-radius: 999px;
+			}
+
+			.chat-input::-webkit-scrollbar-thumb:hover,
+			.chat-output-inner::-webkit-scrollbar-thumb:hover {
+				background: rgba(99, 102, 241, 0.5);
+			}
+
+			.chat-output-inner strong {
+				font-weight: 700;
+			}
+
+			.chat-output-inner em {
+				font-style: italic;
+			}
+
+			.chat-output-inner code {
+				border-radius: 0.6rem;
+				background: rgba(15, 23, 42, 0.08);
+				padding: 0.15rem 0.45rem;
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+				font-size: 0.92em;
+			}
+
+			.chat-output-inner a {
+				text-decoration: underline;
+				text-underline-offset: 0.18em;
+			}
+
+			.chat-output-inner .placeholder {
+				opacity: 0.6;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="hero">
+			<div class="bg-white dark:bg-gray-900">
+				<header class="absolute inset-x-0 top-0 z-50">
+					<nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
+						<div class="flex lg:flex-1">
+							<a href="/index.html" class="-m-1.5 p-1.5">
+								<span class="sr-only">BNAO</span>
+								<img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="" class="h-8 w-auto dark:hidden">
+								<img src="/logo-bnao-text.svg" alt="BNAO" class="h-8 w-auto not-dark:hidden">
+							</a>
+						</div>
+						<div class="hidden lg:flex lg:gap-x-12">
+							<a href="/index.html" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Home</a>
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Bildungsnetzwerk</a>
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Veranstaltungen</a>
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Projekte</a>
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Stellenmarkt</a>
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Kontakt</a>
+						</div>
+						<div class="hidden lg:flex lg:flex-1 lg:justify-end">
+							<a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+						</div>
+					</nav>
+				</header>
+
+				<div class="relative isolate overflow-hidden pt-14 min-h-screen">
+					<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply" alt="" class="absolute inset-0 -z-10 size-full object-cover not-dark:hidden">
+					<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=fff&sat=-100&exp=15&blend-mode=overlay" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-10 dark:hidden">
+					<div aria-hidden="true" class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+						<div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
+					</div>
+
+					<div class="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-7xl items-center px-6 py-24 lg:px-8">
+						<div class="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+							<div class="max-w-xl">
+								<p class="text-sm font-semibold uppercase tracking-[0.25em] text-indigo-600 dark:text-indigo-300">Persönlicher Assistent</p>
+								<h1 class="mt-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-6xl dark:text-white">Frag den Bildungsassistenten</h1>
+								<p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Die Seite bleibt fast gleich. Nur der eigentliche Chat ist jetzt separat untergebracht, damit die Startseite sauber bleibt.</p>
+								<div class="mt-8 flex flex-wrap gap-4">
+									<a href="/index.html" class="rounded-md bg-white/80 px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-900/10 backdrop-blur hover:bg-white dark:bg-white/10 dark:text-white dark:ring-white/20 dark:hover:bg-white/15">Zurück zur Startseite</a>
+								</div>
+							</div>
+
+							<div class="chat-shell rounded-[2rem] border border-white/30 bg-white/75 p-5 shadow-2xl ring-1 ring-black/5 dark:border-white/15 dark:bg-gray-900/70 dark:ring-white/10 sm:p-6">
+								<div class="grid gap-4">
+									<textarea id="input" placeholder="Was möchtest du wissen?" class="chat-input rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-indigo-300 dark:focus:ring-indigo-500/20"></textarea>
+									<div class="flex justify-end">
+										<button id="send" type="button" class="rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400">Senden</button>
+									</div>
+									<div id="output" class="chat-output rounded-3xl border border-gray-200 bg-gray-50 text-sm text-gray-900 outline-none dark:border-white/10 dark:bg-black/20 dark:text-white">
+										<div id="outputContent" role="status" aria-live="polite" class="chat-output-inner">
+											<span class="placeholder">Antwort erscheint hier</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div aria-hidden="true" class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+						<div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-288.75"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="module">
+			const input = document.getElementById("input");
+			const output = document.getElementById("output");
+			const outputContent = document.getElementById("outputContent");
+			const send = document.getElementById("send");
+
+			const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+			const placeholder = '<span class="placeholder">Antwort erscheint hier</span>';
+			let chatbotContext = "";
+			let chatbotContextPromise;
+
+			function buildPrompt(message) {
+				return `Hier sind ein paar wichtige informationen die beim beantworten der frage hilfreich sein können: ${chatbotContext} jetzt, du, der hilfreiche Bildungsassistenten und personalassistent sollst nun meine, einen unwissenden Hilflosen schöler folgende frage beantworten SO KURZ UND SIMPEL WIE MÖGLICH: ${message}`;
+			}
+
+			function getTextFromResponse(data) {
+				if (!data || !Array.isArray(data.output)) return "";
+
+				let text = "";
+
+				for (const item of data.output) {
+					if (!item || !Array.isArray(item.content)) continue;
+
+					for (const part of item.content) {
+						if (part && part.type === "output_text" && typeof part.text === "string") {
+							text += part.text;
+						}
+					}
+				}
+
+				return text.trim();
+			}
+
+			function escapeHtml(text) {
+				return text.replace(/[&<>"']/g, char => ({
+					"&": "&amp;",
+					"<": "&lt;",
+					">": "&gt;",
+					'"': "&quot;",
+					"'": "&#39;"
+				}[char]));
+			}
+
+			function renderText(text) {
+				return escapeHtml(text)
+					.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+					.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+					.replace(/\*(.+?)\*/g, "<em>$1</em>")
+					.replace(/`([^`]+)`/g, "<code>$1</code>")
+					.replace(/\n/g, "<br>");
+			}
+
+			async function typeText(element, text, delay = 12) {
+				let current = "";
+				for (let i = 0; i < text.length; i++) {
+					current += text[i];
+					element.innerHTML = renderText(current);
+					element.scrollTop = element.scrollHeight;
+					await new Promise(resolve => setTimeout(resolve, delay));
+				}
+			}
+
+			async function loadChatbotContext() {
+				if (!chatbotContextPromise) {
+					chatbotContextPromise = fetch("./chatbotKontext.txt")
+						.then(response => {
+							if (!response.ok) throw new Error("chatbotKontext.txt konnte nicht geladen werden.");
+							return response.text();
+						})
+						.then(text => {
+							chatbotContext = text;
+							return text;
+						});
+				}
+				return chatbotContextPromise;
+			}
+
+			async function sendMessage() {
+				const message = input.value.trim();
+
+				if (!apiKey) {
+					outputContent.textContent = "VITE_OPENAI_API_KEY fehlt in der .env Datei.";
+					return;
+				}
+
+				if (!message) {
+					outputContent.textContent = "Bitte gib eine Frage ein.";
+					return;
+				}
+
+				try {
+					outputContent.textContent = "Personalassistent denkt...";
+					await loadChatbotContext();
+
+					const response = await fetch("https://api.openai.com/v1/responses", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + apiKey
+						},
+						body: JSON.stringify({
+							model: "gpt-5.4",
+							input: buildPrompt(message)
+						})
+					});
+
+					const data = await response.json();
+
+					if (!response.ok) {
+						outputContent.textContent = data?.error?.message || "Request failed.";
+						return;
+					}
+
+					const text = getTextFromResponse(data);
+
+					if (!text) {
+						outputContent.textContent = "No response text returned.";
+						return;
+					}
+
+					await typeText(outputContent, text, 12);
+				} catch (error) {
+					outputContent.textContent = error.message;
+				}
+			}
+
+			send.addEventListener("click", sendMessage);
+			input.addEventListener("keydown", (event) => {
+				if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+					sendMessage();
+				}
+			});
+
+			loadChatbotContext().catch(() => {
+				outputContent.innerHTML = placeholder;
+			});
+		</script>
+	</body>
+</html>

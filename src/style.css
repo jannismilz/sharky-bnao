@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.floating-chat-button {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 4.25rem;
+  height: 4.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px 9999px 9999px 1rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.28);
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  z-index: 60;
+}
+
+.floating-chat-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 22px 55px rgba(79, 70, 229, 0.34);
+}
+
+.floating-chat-button:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 4px;
+}
+
+.floating-chat-button svg {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.chat-shell {
+  backdrop-filter: blur(18px);
+}
+
+.chat-output {
+  min-height: 18rem;
+}
+
+.chat-input,
+.chat-output,
+.chat-key {
+  resize: vertical;
+}
