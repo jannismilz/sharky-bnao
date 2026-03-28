@@ -77,7 +77,7 @@ async function sendMessage() {
   const message = input.value.trim();
 
   if (!apiKey) {
-    outputContent.textContent = "VITE_OPENAI_API_KEY fehlt in der .env Datei.";
+    outputContent.textContent = "OPENAI_API_KEY fehlt in der .env Datei.";
     return;
   }
 
