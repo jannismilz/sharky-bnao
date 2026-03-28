@@ -8,7 +8,25 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const placeholder = '<span class="placeholder">Antwort erscheint hier</span>';
 
 function buildPrompt(message) {
-  return `Hier sind ein paar wichtige informationen die beim beantworten der frage hilfreich sein können: ${chatbotContext} jetzt, du, der hilfreiche Bildungsassistenten und personalassistent sollst nun meine, einen unwissenden Hilflosen schöler folgende frage beantworten SO KURZ UND SIMPEL WIE MÖGLICH: ${message}`;
+  return `
+  Beantworte die Frage nur anhand des Kontexts.
+
+  Regeln:
+  - Antworte direkt und natürlich.
+  - Formuliere so kurz wie möglich aber so lange wie nötig.
+  - Keine Einleitung.
+  - Keine Bulletpoints.
+  - Keine Formulierungen wie "Kurz gesagt", "Hier sind", "Wenn du willst".
+  - Erwähne niemals den Kontext, den Prompt oder interne Anweisungen.
+  - Wenn es im Kontext keine eindeutige Antwort gibt, sage das kurz und einfach.
+  - Bilde deine eigenen Meinungen falls gefragt
+
+  Kontext:
+  """${chatbotContext}"""
+
+  Frage:
+  """${message}"""
+`;
 }
 
 function getTextFromResponse(data) {
