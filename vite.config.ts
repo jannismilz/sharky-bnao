@@ -8,7 +8,6 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, "index.html"),
                 chatbot: resolve(__dirname, "chatbot.html"),
-                context: resolve(__dirname, "ChatbotKontext.txt"),
             },
         },
     },

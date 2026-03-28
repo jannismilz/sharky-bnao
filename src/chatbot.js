@@ -1,3 +1,5 @@
+import context from "./ChatbotKontext.txt";
+
 const input = document.getElementById("input");
 const outputContent = document.getElementById("outputContent");
 const send = document.getElementById("send");
