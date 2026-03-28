@@ -1,4 +1,4 @@
-import context from "./ChatbotKontext.txt";
+import chatbotContext from "./chatbotKontext.txt?raw";
 
 const input = document.getElementById("input");
 const outputContent = document.getElementById("outputContent");
@@ -6,8 +6,6 @@ const send = document.getElementById("send");
 
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const placeholder = '<span class="placeholder">Antwort erscheint hier</span>';
-let chatbotContext = "";
-let chatbotContextPromise;
 
 function buildPrompt(message) {
   return `Hier sind ein paar wichtige informationen die beim beantworten der frage hilfreich sein können: ${chatbotContext} jetzt, du, der hilfreiche Bildungsassistenten und personalassistent sollst nun meine, einen unwissenden Hilflosen schöler folgende frage beantworten SO KURZ UND SIMPEL WIE MÖGLICH: ${message}`;
@@ -60,21 +58,6 @@ async function typeText(element, text, delay = 12) {
   }
 }
 
-async function loadChatbotContext() {
-  if (!chatbotContextPromise) {
-    chatbotContextPromise = fetch("./chatbotKontext.txt")
-      .then(response => {
-        if (!response.ok) throw new Error("chatbotKontext.txt konnte nicht geladen werden.");
-        return response.text();
-      })
-      .then(text => {
-        chatbotContext = text;
-        return text;
-      });
-  }
-  return chatbotContextPromise;
-}
-
 async function sendMessage() {
   const message = input.value.trim();
 
@@ -90,7 +73,6 @@ async function sendMessage() {
 
   try {
     outputContent.textContent = "Personalassistent denkt...";
-    await loadChatbotContext();
 
     const response = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
@@ -129,8 +111,4 @@ input.addEventListener("keydown", event => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
     sendMessage();
   }
-});
-
-loadChatbotContext().catch(() => {
-  outputContent.innerHTML = placeholder;
 });
